@@ -6,7 +6,7 @@ Example for Automatically Compiling SASS Using Node.js and Express
 Start with the "development" environment:
 
    ```
-   	npm start
+   npm start
    ```
 
 Start with the "staging" environment:
