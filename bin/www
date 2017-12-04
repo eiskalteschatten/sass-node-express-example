@@ -88,3 +88,25 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+/**
+ * Run cleanup when exiting
+ */
+
+process.on('SIGINT', () => {
+  if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
+    console.log('Exiting, running cleanup');
+
+    require('../lib/production/cleanup')().then(() => {
+      console.log('Cleanup finished');
+      process.exit(2);
+    }).catch(error => {
+      console.error(new Error(error));
+      process.exit(1);
+    });
+  }
+  else {
+    process.exit(2);
+  }
+});

@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var css = require('./routes/css');
 
 var app = express();
 
@@ -23,7 +23,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/css', css);
+
+
+if (app.get('env') === 'staging' || app.get('env') === 'production') {
+	// If staging or production, compile the SASS files
+	require('./lib/production/prepareProduction')();
+}
+else {
+	// If not staging or production, just compile the libs.scss
+	require('./lib/compileSass').compileSassLibs().catch(console.error);
+}
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
