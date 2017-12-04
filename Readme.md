@@ -3,6 +3,8 @@ Example for Automatically Compiling SASS Using Node.js and Express
 
 This is an example project to show how to dynamically compile SASS files on-the-fly in a Node.js application using Express.
 
+It is tested with Node.js 8 and 9.
+
 ## Setup:
 
 All you need to do is install the dependencies:
